@@ -1,5 +1,7 @@
+require "httparty"
 require "gfid/version"
+require "uri"
 
 module Gfid
-  # Your code goes here...
+  autoload :GemManager, 'gfid/gem_manager'
 end
