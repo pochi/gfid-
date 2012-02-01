@@ -7,17 +7,23 @@ module Gfid
     def initialize(name, options={ })
       @name = name
       @version = options[:version]
-      # Rubygems.send(:http_proxy, URI(options[:proxy]).host, URI(options[:proxy]).port) if options[:proxy]
     end
 
     def ask_dependencies
       res = Rubygems.dependencies(name)
-      if version
-        res.each { |gem_info| gem_info[:dependencies] if version == gem_info[:number] }
-      else
-        # get the newest
-        @version = res.first[:number]
-        res.first[:dependencies]
+      result = if version
+                 res.map { |gem_info| gem_info[:dependencies] if version == gem_info[:number] }
+               else
+                 # get the newest
+                 @version = res.first[:number]
+                 res.first[:dependencies]
+               end
+
+      result.map do |name, version|
+        if name
+          version = version.split(" ").last
+          self.class.new(name, :version => version)
+        end
       end
     end
   end

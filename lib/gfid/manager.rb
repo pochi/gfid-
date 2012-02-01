@@ -13,8 +13,11 @@ module Gfid
       @gems << Gem.new(name, :verion => version)
     end
 
-    def gems
-      @gems
+    def collect_gems
+      @dependency_gems = gems.first.ask_dependencies
+      while !dependency_gems.emtpy?
+
+      end
     end
   end
 end
