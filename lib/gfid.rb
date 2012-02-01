@@ -1,7 +1,10 @@
 require "httparty"
-require "gfid/version"
 require "uri"
+require "singleton"
+require "gfid/version"
+
 
 module Gfid
-  autoload :Gem, 'gfid/gem_manager'
+  autoload :Manager, 'gfid/manager'
+  autoload :Gem, 'gfid/gem'
 end

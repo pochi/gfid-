@@ -11,10 +11,12 @@ module Gfid
     end
 
     def ask_dependencies
-      res = Rubygems.dependencies(@name)
-      if @version
-        res.each { |gem_info| gem_info[:dependencies] if @version == gem_info[:number] }
+      res = Rubygems.dependencies(name)
+      if version
+        res.each { |gem_info| gem_info[:dependencies] if version == gem_info[:number] }
       else
+        # get the newest
+        @version = res.first[:number]
         res.first[:dependencies]
       end
     end
