@@ -2,19 +2,19 @@
 
 require 'spec_helper'
 
-describe Gfid::GemManager do
+describe Gfid::Gem do
   let :manager do
-    Gfid::GemManager.new('uglifier')
+    Gfid::Gem.new('uglifier')
   end
 
   let :manager_with_version do
-    Gfid::GemManager.new('youroom_api', :version => '0.1.14')
+    Gfid::Gem.new('youroom_api', :version => '0.1.14')
   end
 
   describe ".initialize" do
     context "can create instance" do
-      it "should be instance of Gfid::GemManager" do
-        manager.should be_a_instance_of(Gfid::GemManager)
+      it "should be instance of Gfid::Gem" do
+        manager.should be_a_instance_of(Gfid::Gem)
       end
     end
 
@@ -40,7 +40,4 @@ describe Gfid::GemManager do
     its(:last) { should == ["execjs", ">= 0.3.0"]}
   end
 
-  describe "#collect_gems" do
-
-  end
 end

@@ -1,7 +1,7 @@
 # coding: utf-8
 
 module Gfid
-  class GemManager
+  class Gem
     attr_reader :name, :version, :dependencies
 
     def initialize(name, options={ })
