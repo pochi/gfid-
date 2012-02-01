@@ -2,7 +2,7 @@
 
 module Gfid
   class Gem
-    attr_reader :name, :version, :dependencies
+    attr_reader :name, :dependencies
 
     def initialize(name, options={ })
       @name = name
@@ -12,7 +12,7 @@ module Gfid
     def ask_dependencies
       res = Rubygems.dependencies(name)
       result = if version
-                 res.map { |gem_info| gem_info[:dependencies] if version == gem_info[:number] }
+                 res.select { |gem_info| version == gem_info[:number] }.first[:dependencies]
                else
                  # get the newest
                  @version = res.first[:number]
@@ -24,6 +24,15 @@ module Gfid
           version = version.split(" ").last
           self.class.new(name, :version => version)
         end
+      end
+    end
+
+    def version
+      return nil unless @version
+      if @version.split(".").size == 3
+        @version
+      else
+        @version + ".0"
       end
     end
   end
