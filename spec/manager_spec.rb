@@ -1,6 +1,15 @@
 # coding: utf-8
+# WARNING: uglifier has 4 dependency gems version at 1.2.3
 
 require 'spec_helper'
+
+def mock_gem
+  @gem ||= mock(Gfid::Gem)
+end
+
+def mock_web_response
+  @response ||= mock(HTTParty::Response)
+end
 
 describe Gfid::Manager do
   let :manager do
@@ -31,7 +40,7 @@ describe Gfid::Manager do
     end
   end
 
-  describe "collect_gems" do
+  describe "#collect_gems" do
     before do
       manager.gem_name("uglifier")
       manager.collect_gems
@@ -41,8 +50,25 @@ describe Gfid::Manager do
     its(:size)  { should == 4 }
 
     after do
-      puts manager.gems.inspect
+      manager.clear!
     end
   end
 
+  describe "download!" do
+    before do
+      manager.gem_name("uglifier")
+      manager.should_receive(:collect_gems).and_return([mock_gem])
+      mock_gem.stub!(:filename).and_return("hoge")
+      mock_web_response.should_receive(:body).and_return("hoge")
+    end
+
+    it "should receive each Gfid::Gem.download!" do
+      mock_gem.should_receive(:download!).and_return(mock_web_response)
+      manager.download!
+    end
+
+    after do
+      FileUtils.rm("hoge")
+    end
+  end
 end

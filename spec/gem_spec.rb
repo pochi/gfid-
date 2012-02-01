@@ -53,4 +53,11 @@ describe Gfid::Gem do
       its(:version) { should == "0.3.0" }
     end
   end
+
+  context "#download!" do
+    it "should receive Rubygems.download! with gem_file_name" do
+      Gfid::Rubygems.should_receive(:download).with("youroom_api-0.1.14.gem")
+      gem_with_version.download!
+    end
+  end
 end

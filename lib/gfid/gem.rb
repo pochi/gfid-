@@ -31,9 +31,19 @@ module Gfid
       return nil unless @version
       if @version.split(".").size == 3
         @version
+      elsif @version.split(".").first == "0"
+        @version + ".1"
       else
         @version + ".0"
       end
+    end
+
+    def download!
+      Rubygems.download(filename)
+    end
+
+    def filename
+      name + "-" + version + ".gem"
     end
   end
 
@@ -45,6 +55,10 @@ module Gfid
       def dependencies(gem)
         res = get("/api/v1/dependencies", :query => { :gems => gem } )
         Marshal.load(res.body)
+      end
+
+      def download(path)
+        get("/downloads/#{path}")
       end
     end
   end

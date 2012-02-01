@@ -24,7 +24,17 @@ module Gfid
         end
         @dependency_gems = next_dependency_gems.flatten
       end
+      gems
     end
+
+    def download!
+      collect_gems.each do |gem|
+        open(gem.filename, "wb") do |file|
+          file.write gem.download!.body
+        end
+      end
+    end
+
 
     def clear!
       @gems = []

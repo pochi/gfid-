@@ -8,8 +8,8 @@ Gem::Specification.new do |s|
   s.authors     = ["pochi.black"]
   s.email       = ["pochi.black@gmail.com"]
   s.homepage    = ""
-  s.summary     = %q{TODO: Write a gem summary}
-  s.description = %q{TODO: Write a gem description}
+  s.summary     = %q{gem fetch --include-dependencies}
+  s.description = %q{This gems make you can 'gem fetch --include-dependencies'}
 
   s.rubyforge_project = "gfid"
 
